@@ -46,7 +46,7 @@
 							<h1>
 
 
-								<span class="white" id="id-text2">Covestays</span>
+								<span class="white" id="id-text2">Pencil Admin</span>
 							</h1>
 							<h4 class="blue" id="id-company-text">&copy;Login</h4>
 						</div>
@@ -346,33 +346,41 @@
 				var password = $("#password").val();
 
 				var data = {
-					"email": email,
+					"username": email,
 					"password": password,
 				};
 				data = data;
 				console.log(data);
 				$.ajax({
-					url: '../common/api.php?endpoint=login',
+					url: 'http://13.127.28.104:3000/api/signin',
 					data: data,
 					type: 'POST',
 					statusCode: {
-						400: function (data) {
+						401: function (data) {
+							
 							console.log(data.responseText);
-							$("#login-error").html("<span style='color:red'>" + data.responseText + "</span>");
+							var data=JSON.parse(data.responseText);
+							$("#login-error").html("<span style='color:red'>" + data.msg + "</span>");
 						}
 					},
 					success: function (response) {
-					
-						var response=JSON.parse(response);
-						console.log(data);
-						console.log(response);
+						console.log(response)
+						var data=response;
+					    if(response.success)
+						//window.location.assign("./index.html");
 						
-						localStorage.setItem("email", response.email);
-						localStorage.setItem("role", "admin");
-						localStorage.setItem("name", response.name);
-						check_tokenn();
+						// var response=JSON.parse(response);
+						// console.log(data);
+						// console.log(response);
+						
+						localStorage.setItem("token", data.token);
+						alert(data.token)
+						window.location.assign("./index.html");
+						// localStorage.setItem("role", "admin");
+						// localStorage.setItem("name", response.name);
+						//check_tokenn();
 						function check_tokenn() {
-							var email = localStorage.getItem("email");
+							var token = localStorage.getItem("email");
 							var name = localStorage.getItem("name");
 							var role = localStorage.getItem("role");
 
@@ -382,7 +390,7 @@
 
 								if (role == "admin") {
 
-									window.location.assign("./index.html");
+									
 								} else {
 
 								}

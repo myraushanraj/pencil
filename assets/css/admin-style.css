@@ -1,0 +1,9 @@
+.wrap{
+    border: 1px solid #438eb9;
+    padding: 31px 10px 53px 10px;
+    font-size: 18px;
+}
+.modal-body label,.modal-body textarea,.modal-body select{
+width:76%;
+text-align: left;
+}
